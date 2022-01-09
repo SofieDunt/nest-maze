@@ -18,14 +18,17 @@ export class SearchService {
     type: SearchTypes,
     first: number,
   ): Worklist<number> {
-    let n: Worklist<number>;
-    if (type === SearchTypes.BFS) {
-      n = new BfsList<number>();
-    } else {
-      n = new LifoList<number>();
-    }
-    if (type !== SearchTypes.NONE) {
-      n.add(first);
+    let n: Worklist<number> = new LifoList();
+    switch (type) {
+      case SearchTypes.BFS:
+        n = new BfsList<number>();
+        n.add(first);
+        break;
+      case SearchTypes.DFS:
+        n.add(first);
+        break;
+      case SearchTypes.NONE:
+        break;
     }
     return n;
   }
