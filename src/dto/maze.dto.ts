@@ -1,5 +1,4 @@
-import { EdgeDto, MazeNodeDto, PosnDto } from '../dto';
-import { Exclude } from 'class-transformer';
+import { EdgeDto, MazeNodeDto } from '../dto';
 
 export class MazeDto {
   readonly xDim: number;
@@ -7,9 +6,6 @@ export class MazeDto {
   readonly bias: number;
   readonly nodes: MazeNodeDto[];
   readonly edges: EdgeDto[][];
-
-  @Exclude()
-  readonly posnToNode: (posn: PosnDto) => number;
 
   constructor(
     xDim: number,
@@ -23,6 +19,5 @@ export class MazeDto {
     this.bias = bias;
     this.nodes = nodes;
     this.edges = edges;
-    this.posnToNode = (posn) => posn.x + posn.y * this.xDim;
   }
 }
