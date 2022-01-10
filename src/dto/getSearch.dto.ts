@@ -1,16 +1,16 @@
-import { MazeDto, PosnDto, SearchTypeEnum } from './index';
+import { MazeDto, SearchTypeEnum } from './index';
 
 export class GetSearchDto {
   readonly maze: MazeDto;
   readonly type: SearchTypeEnum;
-  readonly source: PosnDto;
-  readonly target: PosnDto;
+  readonly source: number;
+  readonly target: number;
 
   constructor(
     maze: MazeDto,
     type: SearchTypeEnum,
-    source: PosnDto,
-    target: PosnDto,
+    source: number,
+    target: number,
   ) {
     this.maze = maze;
     this.type = type;

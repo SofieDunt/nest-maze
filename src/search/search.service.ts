@@ -1,20 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { MazeDto, SearchDto, SearchTypeEnum, PosnDto, IdMap } from '../dto';
+import {
+  MazeDto,
+  SearchDto,
+  SearchTypeEnum,
+  IdMap,
+  KeyValDto,
+  MapMapper,
+} from '../dto';
 import { Worklist, BfsList, LifoList } from '../utils';
 
 @Injectable()
 export class SearchService {
-  search(
-    maze: MazeDto,
-    type: SearchTypeEnum,
-    source: PosnDto,
-    target: PosnDto,
-  ) {
-    const worklist = SearchService.searchWorklist(
-      type,
-      maze.posnToNode(source),
-    );
-    return SearchService.findTarget(worklist, maze, maze.posnToNode(target));
+  search(maze: MazeDto, type: SearchTypeEnum, source: number, target: number) {
+    const worklist = SearchService.searchWorklist(type, source);
+    return SearchService.findTarget(worklist, maze, target);
   }
 
   private static searchWorklist(
@@ -48,11 +47,11 @@ export class SearchService {
       SearchService.searchNode(worklist, maze, target, found, parents);
     }
 
-    return {
+    return new SearchDto(
       found,
       parents,
-      path: SearchService.reconstructPath(parents, target),
-    };
+      SearchService.reconstructPath(parents, target),
+    );
   }
 
   private static searchNode(
@@ -88,7 +87,7 @@ export class SearchService {
     return neighbors;
   }
 
-  private static reconstructPath(parents: IdMap, target: number): IdMap {
+  static reconstructPath(parents: IdMap, target: number): KeyValDto[] {
     const path = new Map<number, number>();
     let at = target;
     let order = 0;
@@ -101,6 +100,6 @@ export class SearchService {
       }
     }
     path.set(at, order);
-    return path;
+    return MapMapper.mapIdMap(path);
   }
 }

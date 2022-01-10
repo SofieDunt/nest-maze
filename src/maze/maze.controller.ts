@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { MazeDto, GetMazeDto } from '../dto';
 import { MazeService } from './maze.service';
 
@@ -6,7 +6,7 @@ import { MazeService } from './maze.service';
 export class MazeController {
   constructor(private readonly mazeService: MazeService) {}
 
-  @Get()
+  @Post()
   async get(@Body() req: GetMazeDto): Promise<MazeDto> {
     return await this.mazeService.construct(req.xDim, req.yDim, req.bias);
   }

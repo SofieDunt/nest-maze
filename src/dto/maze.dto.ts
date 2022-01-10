@@ -1,4 +1,4 @@
-import { EdgeDto, MazeNodeDto, PosnDto } from './index';
+import { EdgeDto, MazeNodeDto, PosnDto } from '../dto';
 import { Exclude } from 'class-transformer';
 
 export class MazeDto {

@@ -143,6 +143,11 @@ export class MazeService {
         treeEdges[nextEdge.second].push(
           new EdgeDto(nextEdge.second, nextEdge.first, nextEdge.weight),
         );
+        if (nextEdge.second - nextEdge.first > 1) {
+          nodes[nextEdge.first].setHasPathToBottom(true);
+        } else {
+          nodes[nextEdge.first].setHasPathToRight(true);
+        }
         parents.set(
           parents.findParent(nextEdge.first),
           parents.findParent(nextEdge.second),
