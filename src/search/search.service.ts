@@ -1,15 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import Maze from '../types/maze';
-import SearchTypes from '../types/searchTypes';
-import Worklist from '../utils/worklist';
-import BfsList from '../utils/bfsList';
-import LifoList from '../utils/lifoList';
-import { SearchResult } from '../types/searchResult';
-import { IdMap } from '../utils/parents';
+import { MazeDto, SearchDto } from '../dto';
+import { SearchTypes, Worklist, BfsList, LifoList, IdMap } from '../utils';
 
 @Injectable()
 export class SearchService {
-  search(maze: Maze, type: SearchTypes, source: number, target: number) {
+  search(maze: MazeDto, type: SearchTypes, source: number, target: number) {
     const worklist = SearchService.searchWorklist(type, source);
     return SearchService.findTarget(worklist, maze, target);
   }
@@ -35,9 +30,9 @@ export class SearchService {
 
   private static findTarget(
     worklist: Worklist<number>,
-    maze: Maze,
+    maze: MazeDto,
     target: number,
-  ): SearchResult {
+  ): SearchDto {
     const found: IdMap = new Map<number, number>();
     const parents: IdMap = new Map<number, number>();
 
@@ -54,7 +49,7 @@ export class SearchService {
 
   private static searchNode(
     worklist: Worklist<number>,
-    maze: Maze,
+    maze: MazeDto,
     target: number,
     found: IdMap,
     parents: IdMap,
@@ -77,7 +72,7 @@ export class SearchService {
     }
   }
 
-  private static getNodeNeighbors(node: number, maze: Maze): number[] {
+  private static getNodeNeighbors(node: number, maze: MazeDto): number[] {
     const neighbors: number[] = [];
     maze.edges[node].forEach((edge) => {
       neighbors.push(edge.second);

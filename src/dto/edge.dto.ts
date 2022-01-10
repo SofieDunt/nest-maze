@@ -1,6 +1,4 @@
-import Parents from '../utils/parents';
-
-export default class Edge {
+export class EdgeDto {
   readonly first: number;
   readonly second: number;
   readonly weight: number;
@@ -9,9 +7,5 @@ export default class Edge {
     this.first = first;
     this.second = second;
     this.weight = weight;
-  }
-
-  cycles(parents: Parents): boolean {
-    return parents.findParent(this.first) === parents.findParent(this.second);
   }
 }

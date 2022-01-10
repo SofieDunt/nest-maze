@@ -1,6 +1,6 @@
 export type IdMap = Map<number, number>;
 
-export default class Parents {
+export class Parents {
   private parents = new Map<number, number>();
 
   findParent(nodeId: number): number {

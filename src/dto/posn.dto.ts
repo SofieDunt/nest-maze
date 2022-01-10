@@ -1,4 +1,4 @@
-export default class Posn {
+export class PosnDto {
   readonly x: number;
   readonly y: number;
 

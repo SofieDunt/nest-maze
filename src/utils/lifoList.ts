@@ -1,6 +1,6 @@
-import Worklist from './worklist';
+import { Worklist } from './index';
 
-class LifoList<T> implements Worklist<T> {
+export class LifoList<T> implements Worklist<T> {
   private array: T[];
 
   constructor() {
@@ -36,5 +36,3 @@ class LifoList<T> implements Worklist<T> {
     return this.array.length === 0;
   }
 }
-
-export default LifoList;

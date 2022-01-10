@@ -1,6 +1,6 @@
 import Worklist from './worklist';
 
-class BfsList<T> implements Worklist<T> {
+export class BfsList<T> implements Worklist<T> {
   private array: T[][];
   constructor() {
     this.array = [];
@@ -51,5 +51,3 @@ class BfsList<T> implements Worklist<T> {
     return this.array.length === 0;
   }
 }
-
-export default BfsList;

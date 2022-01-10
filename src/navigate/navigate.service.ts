@@ -1,22 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import Maze from '../types/maze';
-import Posn from '../types/posn';
-import Directions from '../types/directions';
-import MazeNode from '../types/mazeNode';
+import { MazeDto, PosnDto, MazeNodeDto } from '../dto';
+import { Directions } from '../utils';
 
 @Injectable()
 export class NavigateService {
-  move(player: Posn, maze: Maze, direction: Directions): Posn {
+  move(player: PosnDto, maze: MazeDto, direction: Directions): PosnDto {
     if (NavigateService.canMove(player, maze, direction)) {
       switch (direction) {
         case Directions.LEFT:
-          return new Posn(player.x - 1, player.y);
+          return new PosnDto(player.x - 1, player.y);
         case Directions.RIGHT:
-          return new Posn(player.x + 1, player.y);
+          return new PosnDto(player.x + 1, player.y);
         case Directions.UP:
-          return new Posn(player.x, player.y - 1);
+          return new PosnDto(player.x, player.y - 1);
         case Directions.DOWN:
-          return new Posn(player.x, player.y + 1);
+          return new PosnDto(player.x, player.y + 1);
         default:
           return player;
       }
@@ -26,8 +24,8 @@ export class NavigateService {
   }
 
   private static canMove(
-    player: Posn,
-    maze: Maze,
+    player: PosnDto,
+    maze: MazeDto,
     direction: Directions,
   ): boolean {
     switch (direction) {
@@ -68,7 +66,7 @@ export class NavigateService {
     }
   }
 
-  private static hasPathToRight(node: MazeNode, maze: Maze): boolean {
+  private static hasPathToRight(node: MazeNodeDto, maze: MazeDto): boolean {
     const outEdges = maze.edges[node.id];
     let bool = (node.posn.x % maze.xDim) + 1 === maze.xDim;
     outEdges.forEach((edge) => {
@@ -79,7 +77,7 @@ export class NavigateService {
     return bool;
   }
 
-  private static hasPathToBottom(node: MazeNode, maze: Maze): boolean {
+  private static hasPathToBottom(node: MazeNodeDto, maze: MazeDto): boolean {
     const outEdges = maze.edges[node.id];
     let bool = (node.posn.y % maze.yDim) + 1 === maze.yDim;
     outEdges.forEach((edge) => {

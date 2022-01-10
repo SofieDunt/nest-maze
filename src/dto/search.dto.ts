@@ -1,6 +1,6 @@
-import { IdMap } from '../utils/parents';
+import { IdMap } from '../utils';
 
-export interface SearchResult {
+export class SearchDto {
   readonly found: IdMap;
   readonly parents: IdMap;
   readonly path: IdMap;
