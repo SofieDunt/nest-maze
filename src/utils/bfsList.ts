@@ -1,4 +1,4 @@
-import Worklist from './worklist';
+import { Worklist } from './index';
 
 export class BfsList<T> implements Worklist<T> {
   private array: T[][];

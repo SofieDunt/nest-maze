@@ -1,28 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { MazeDto, SearchDto } from '../dto';
-import { SearchTypes, Worklist, BfsList, LifoList, IdMap } from '../utils';
+import { Worklist, BfsList, LifoList, IdMap } from '../utils';
+import { SearchTypeEnum } from '../enum';
 
 @Injectable()
 export class SearchService {
-  search(maze: MazeDto, type: SearchTypes, source: number, target: number) {
+  search(maze: MazeDto, type: SearchTypeEnum, source: number, target: number) {
     const worklist = SearchService.searchWorklist(type, source);
     return SearchService.findTarget(worklist, maze, target);
   }
 
   private static searchWorklist(
-    type: SearchTypes,
+    type: SearchTypeEnum,
     first: number,
   ): Worklist<number> {
     let n: Worklist<number> = new LifoList();
     switch (type) {
-      case SearchTypes.BFS:
+      case SearchTypeEnum.BFS:
         n = new BfsList<number>();
         n.add(first);
         break;
-      case SearchTypes.DFS:
+      case SearchTypeEnum.DFS:
         n.add(first);
         break;
-      case SearchTypes.NONE:
+      case SearchTypeEnum.NONE:
         break;
     }
     return n;

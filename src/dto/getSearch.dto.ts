@@ -1,9 +1,9 @@
 import { MazeDto } from './index';
-import { SearchTypes } from '../utils';
+import { SearchTypeEnum } from '../enum';
 
 export class GetSearchDto {
   readonly maze: MazeDto;
-  readonly type: SearchTypes;
+  readonly type: SearchTypeEnum;
   readonly source: number;
   readonly target: number;
 }

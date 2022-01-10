@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { MazeDto, PosnDto, MazeNodeDto } from '../dto';
-import { Directions } from '../utils';
+import { DirectionEnum } from '../enum';
 
 @Injectable()
 export class NavigateService {
-  move(player: PosnDto, maze: MazeDto, direction: Directions): PosnDto {
+  move(player: PosnDto, maze: MazeDto, direction: DirectionEnum): PosnDto {
     if (NavigateService.canMove(player, maze, direction)) {
       switch (direction) {
-        case Directions.LEFT:
+        case DirectionEnum.LEFT:
           return new PosnDto(player.x - 1, player.y);
-        case Directions.RIGHT:
+        case DirectionEnum.RIGHT:
           return new PosnDto(player.x + 1, player.y);
-        case Directions.UP:
+        case DirectionEnum.UP:
           return new PosnDto(player.x, player.y - 1);
-        case Directions.DOWN:
+        case DirectionEnum.DOWN:
           return new PosnDto(player.x, player.y + 1);
         default:
           return player;
@@ -26,10 +26,10 @@ export class NavigateService {
   private static canMove(
     player: PosnDto,
     maze: MazeDto,
-    direction: Directions,
+    direction: DirectionEnum,
   ): boolean {
     switch (direction) {
-      case Directions.LEFT:
+      case DirectionEnum.LEFT:
         return (
           player.x - 1 >= 0 &&
           NavigateService.hasPathToRight(
@@ -37,7 +37,7 @@ export class NavigateService {
             maze,
           )
         );
-      case Directions.RIGHT:
+      case DirectionEnum.RIGHT:
         return (
           player.x + 1 < maze.xDim &&
           NavigateService.hasPathToRight(
@@ -45,7 +45,7 @@ export class NavigateService {
             maze,
           )
         );
-      case Directions.UP:
+      case DirectionEnum.UP:
         return (
           player.y - 1 >= 0 &&
           NavigateService.hasPathToBottom(
@@ -53,7 +53,7 @@ export class NavigateService {
             maze,
           )
         );
-      case Directions.DOWN:
+      case DirectionEnum.DOWN:
         return (
           player.y + 1 < maze.yDim &&
           NavigateService.hasPathToBottom(
