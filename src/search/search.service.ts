@@ -1,12 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { MazeDto, SearchDto, SearchTypeEnum } from '../dto';
+import { MazeDto, SearchDto, SearchTypeEnum, PosnDto } from '../dto';
 import { Worklist, BfsList, LifoList, IdMap } from '../utils';
 
 @Injectable()
 export class SearchService {
-  search(maze: MazeDto, type: SearchTypeEnum, source: number, target: number) {
-    const worklist = SearchService.searchWorklist(type, source);
-    return SearchService.findTarget(worklist, maze, target);
+  search(
+    maze: MazeDto,
+    type: SearchTypeEnum,
+    source: PosnDto,
+    target: PosnDto,
+  ) {
+    const worklist = SearchService.searchWorklist(
+      type,
+      maze.posnToNode(source),
+    );
+    return SearchService.findTarget(worklist, maze, maze.posnToNode(target));
   }
 
   private static searchWorklist(
