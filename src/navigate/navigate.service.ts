@@ -1,25 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { MazeDto, PosnDto, MazeNodeDto, DirectionEnum } from '../dto';
+import {
+  MazeDto,
+  PosnDto,
+  MazeNodeDto,
+  DirectionEnum,
+  PlayerDto,
+} from '../dto';
 
 @Injectable()
 export class NavigateService {
-  move(player: PosnDto, maze: MazeDto, direction: DirectionEnum): PosnDto {
+  move(player: PosnDto, maze: MazeDto, direction: DirectionEnum): PlayerDto {
+    let playerPosn: PosnDto;
     if (NavigateService.canMove(player, maze, direction)) {
       switch (direction) {
         case DirectionEnum.LEFT:
-          return new PosnDto(player.x - 1, player.y);
+          playerPosn = new PosnDto(player.x - 1, player.y);
+          break;
         case DirectionEnum.RIGHT:
-          return new PosnDto(player.x + 1, player.y);
+          playerPosn = new PosnDto(player.x + 1, player.y);
+          break;
         case DirectionEnum.UP:
-          return new PosnDto(player.x, player.y - 1);
+          playerPosn = new PosnDto(player.x, player.y - 1);
+          break;
         case DirectionEnum.DOWN:
-          return new PosnDto(player.x, player.y + 1);
+          playerPosn = new PosnDto(player.x, player.y + 1);
+          break;
         default:
-          return player;
+          playerPosn = player;
       }
     } else {
-      return player;
+      playerPosn = player;
     }
+    return new PlayerDto(playerPosn, maze.posnToNode(playerPosn));
   }
 
   private static canMove(

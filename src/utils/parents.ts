@@ -1,4 +1,4 @@
-export type IdMap = Map<number, number>;
+import { IdMap } from '../dto';
 
 export class Parents {
   private parents = new Map<number, number>();
@@ -18,11 +18,5 @@ export class Parents {
 
   set(key: number, value: number): void {
     this.parents.set(key, value);
-  }
-
-  toIdMap(): IdMap {
-    const copy = new Map<number, number>();
-    this.parents.forEach((val: number, key: number) => copy.set(key, val));
-    return copy;
   }
 }
