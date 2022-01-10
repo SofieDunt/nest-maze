@@ -1,5 +1,4 @@
-import { MazeDto } from './index';
-import { SearchTypeEnum } from '../enum';
+import { MazeDto, SearchTypeEnum } from './index';
 
 export class GetSearchDto {
   readonly maze: MazeDto;

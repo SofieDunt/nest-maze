@@ -1,5 +1,4 @@
-import { PosnDto, MazeDto } from './index';
-import { DirectionEnum } from '../enum';
+import { PosnDto, MazeDto, DirectionEnum } from './index';
 
 export class GetMoveDto {
   readonly player: PosnDto;

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { MazeDto, SearchDto } from '../dto';
+import { MazeDto, SearchDto, SearchTypeEnum } from '../dto';
 import { Worklist, BfsList, LifoList, IdMap } from '../utils';
-import { SearchTypeEnum } from '../enum';
 
 @Injectable()
 export class SearchService {

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MazeDto, PosnDto, MazeNodeDto } from '../dto';
-import { DirectionEnum } from '../enum';
+import { MazeDto, PosnDto, MazeNodeDto, DirectionEnum } from '../dto';
 
 @Injectable()
 export class NavigateService {
