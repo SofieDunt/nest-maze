@@ -11,9 +11,36 @@ import { Worklist, BfsList, LifoList } from '../utils';
 
 @Injectable()
 export class SearchService {
-  search(maze: MazeDto, type: SearchTypeEnum, source: number, target: number) {
+  async search(
+    maze: MazeDto,
+    type: SearchTypeEnum,
+    source: number,
+    target: number,
+  ): Promise<SearchDto> {
     const worklist = SearchService.searchWorklist(type, source);
-    return SearchService.findTarget(worklist, maze, target);
+    return this.findTarget(worklist, maze, source, target);
+  }
+
+  async reconstructPath(
+    parents: IdMap,
+    source: number,
+    target: number,
+  ): Promise<KeyValDto[]> {
+    const path = new Map<number, number>();
+    let at = target;
+    let order = 0;
+    while (at !== source) {
+      path.set(at, order);
+      const parent = parents.get(at);
+      if (parent !== undefined) {
+        at = parent;
+        order++;
+      } else {
+        break;
+      }
+    }
+    path.set(source, order);
+    return MapMapper.mapIdMap(path);
   }
 
   private static searchWorklist(
@@ -35,11 +62,12 @@ export class SearchService {
     return n;
   }
 
-  private static findTarget(
+  private async findTarget(
     worklist: Worklist<number>,
     maze: MazeDto,
+    source: number,
     target: number,
-  ): SearchDto {
+  ): Promise<SearchDto> {
     const found: IdMap = new Map<number, number>();
     const parents: IdMap = new Map<number, number>();
 
@@ -47,11 +75,8 @@ export class SearchService {
       SearchService.searchNode(worklist, maze, target, found, parents);
     }
 
-    return new SearchDto(
-      found,
-      parents,
-      SearchService.reconstructPath(parents, target),
-    );
+    const path = await this.reconstructPath(parents, source, target);
+    return new SearchDto(found, parents, path);
   }
 
   private static searchNode(
@@ -85,21 +110,5 @@ export class SearchService {
       neighbors.push(edge.second);
     });
     return neighbors;
-  }
-
-  static reconstructPath(parents: IdMap, target: number): KeyValDto[] {
-    const path = new Map<number, number>();
-    let at = target;
-    let order = 0;
-    while (at !== 0) {
-      path.set(at, order);
-      const parent = parents.get(at);
-      if (parent !== undefined) {
-        at = parent;
-        order++;
-      }
-    }
-    path.set(at, order);
-    return MapMapper.mapIdMap(path);
   }
 }
