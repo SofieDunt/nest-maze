@@ -1,12 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { GameDto, SearchTypeEnum } from './dto';
-import { MazeService } from './maze/maze.service';
+import { ConstructorService } from './constructor/constructor.service';
 import { SearchService } from './search/search.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly mazeService: MazeService,
+    private readonly mazeService: ConstructorService,
     private readonly searchService: SearchService,
   ) {}
 

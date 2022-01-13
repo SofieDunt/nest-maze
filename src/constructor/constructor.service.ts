@@ -9,7 +9,7 @@ import {
 } from '../utils';
 
 @Injectable()
-export class MazeService {
+export class ConstructorService {
   async construct(xDim: number, yDim: number, bias: number): Promise<MazeDto> {
     xDim = Math.max(1, Math.ceil(xDim));
     yDim = Math.max(1, Math.ceil(yDim));
@@ -24,8 +24,8 @@ export class MazeService {
       verticalCap = 50;
     }
 
-    const nodes = MazeService.constructNodes(xDim, yDim);
-    const edges = MazeService.constructMST(
+    const nodes = ConstructorService.constructNodes(xDim, yDim);
+    const edges = ConstructorService.constructMST(
       nodes,
       xDim,
       yDim,
@@ -117,7 +117,7 @@ export class MazeService {
     horizontalCap: number,
     verticalCap: number,
   ): EdgeDto[][] {
-    const edges = MazeService.constructEdges(
+    const edges = ConstructorService.constructEdges(
       nodes,
       xDim,
       yDim,
@@ -138,7 +138,7 @@ export class MazeService {
 
     while (lolLength(treeEdges) < numTreeEdges * 2) {
       const nextEdge = worklist.extractRoot();
-      if (nextEdge && !MazeService.cycles(parents, nextEdge)) {
+      if (nextEdge && !ConstructorService.cycles(parents, nextEdge)) {
         treeEdges[nextEdge.first].push(nextEdge);
         treeEdges[nextEdge.second].push(
           new EdgeDto(nextEdge.second, nextEdge.first, nextEdge.weight),

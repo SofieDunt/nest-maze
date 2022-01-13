@@ -18,10 +18,10 @@ export class SearchService {
     target: number,
   ): Promise<SearchDto> {
     const worklist = SearchService.searchWorklist(type, source);
-    return this.findTarget(worklist, maze, source, target);
+    return SearchService.findTarget(worklist, maze, source, target);
   }
 
-  async reconstructPath(
+  private static async reconstructPath(
     parents: IdMap,
     source: number,
     target: number,
@@ -62,7 +62,7 @@ export class SearchService {
     return n;
   }
 
-  private async findTarget(
+  private static async findTarget(
     worklist: Worklist<number>,
     maze: MazeDto,
     source: number,
@@ -75,7 +75,7 @@ export class SearchService {
       SearchService.searchNode(worklist, maze, target, found, parents);
     }
 
-    const path = await this.reconstructPath(parents, source, target);
+    const path = await SearchService.reconstructPath(parents, source, target);
     return new SearchDto(found, parents, path);
   }
 

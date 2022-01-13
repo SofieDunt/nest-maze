@@ -1,7 +1,5 @@
 export * from './edge.dto';
 export * from './game.dto';
-export * from './getMaze.dto';
-export * from './getPath.dto';
 export * from './idMap';
 export * from './keyVal.dto';
 export * from './mapMapper';

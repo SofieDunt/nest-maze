@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { MazeModule } from './maze/maze.module';
+import { ConstructorModule } from './constructor/constructor.module';
 import { SearchModule } from './search/search.module';
-import { MazeService } from './maze/maze.service';
+import { ConstructorService } from './constructor/constructor.service';
 import { SearchService } from './search/search.service';
 
 @Module({
-  imports: [MazeModule, SearchModule],
+  imports: [ConstructorModule, SearchModule],
   controllers: [AppController],
-  providers: [MazeService, SearchService],
+  providers: [ConstructorService, SearchService],
 })
 export class AppModule {}
